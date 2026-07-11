@@ -1,0 +1,9 @@
+{
+  "dependencies" : [ {
+    "name" : "glfw3",
+    "version>=" : "3.4#1"
+  }, {
+    "name" : "raylib",
+    "version>=" : "5.5#1"
+  } ]
+}

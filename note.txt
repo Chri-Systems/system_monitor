@@ -1,0 +1,10 @@
+fare nuovo snapshot processi ogni circa 2 secondi, serve solo a vedere se ci sono nuovi processi o se sono stati chiusi, aggiornare dati iniziali come nome, directory
+
+aggiornare cpu ogni tot settato da utente, 100-1000 ms range (default 500ms)
+
+per utilizzo risorse processi e storia utilizzo risorse processi usare unordered_map con pid chiave primaria e struct custom come dati
+struct custom:
+pid
+process name
+cpu usage (percentuale con precisione 1 o 2 cifre decimali)
+ram usage (kb, mb o gb in base a quanto sta usando, sempre con precisione decimale di 1 o 2)
