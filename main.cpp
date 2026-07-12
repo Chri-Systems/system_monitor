@@ -20,7 +20,7 @@ void update_input();
 int main() {
   // std::jthread thread_test = std::thread(&function_test);
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(ui::window_width, ui::window_height, "test");
+  InitWindow(ui::window_width, ui::window_height, "SystemMonitor");
 
   ui::font = LoadFontEx("Archivo-SemiBold.ttf", 48, nullptr, 250);
 
@@ -73,15 +73,27 @@ void update_input() {
 
   //pulsanti
 
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_cpu_usage_rect)) {
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_name_rect)) {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = 0;
+      ui::processes_sort = SORT_ALPHABETICAL;
     }
   }
 
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_name_rect)) {
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_pid_rect)) {
     if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = 1;
+      ui::processes_sort = SORT_PID;
+    }
+  }
+
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_parent_pid_rect)) {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      ui::processes_sort = SORT_PARENT_PID;
+    }
+  }
+
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_cpu_usage_rect)) {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      ui::processes_sort = SORT_CPU_USAGE;
     }
   }
 

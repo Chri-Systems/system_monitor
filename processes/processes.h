@@ -24,7 +24,7 @@ namespace process {
     unsigned long long user;
   };
   struct Process {
-    DWORD parent_id;
+    DWORD parent_pid;
     std::string name;
     std::string path;
     std::atomic<double> cpu_usage;

@@ -75,7 +75,7 @@ namespace process {
       Process& proc = processes[proc_entry.th32ProcessID];
       proc.name = std::string(proc_entry.szExeFile);
       proc.handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, proc_entry.th32ProcessID);
-      proc.parent_id = proc_entry.th32ParentProcessID;
+      proc.parent_pid = proc_entry.th32ParentProcessID;
       proc.path = get_process_path(proc.handle);
       if (proc.path.starts_with(R"(C:\Windows\System32\)")) { // || proc.path == "can't find path"
         proc.is_system = true;

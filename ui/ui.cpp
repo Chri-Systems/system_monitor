@@ -10,24 +10,6 @@
 
 
 namespace ui {
-  float column_ico = 190;
-  float column_name = 220;
-  float column_proc_id = 570;
-  float column_parent_id = 720;
-  float column_cpu = 870;
-  float column_path = 1000;
-  float column_offset = 45;
-
-  Color header_text_color = {200, 200, 200, 255};
-  float header_text_size = 24;
-  float header_text_height = 52;
-
-  Color data_text_color = {200, 200, 200, 255};
-  float data_text_size = 20;
-
-  float line_height = 30;
-  Color lines_color_1 = {40, 40, 40, 255};
-  Color lines_color_2 = {60, 60, 60, 255};
 
   void render_processes() {
     float i = 100;
@@ -47,16 +29,31 @@ namespace ui {
 
     switch (processes_sort) {
 
-      case 0: {
-        //sort alfabetico
+      case SORT_ALPHABETICAL: {
         std::sort(sorted_procs.begin(), sorted_procs.end(), [](const auto* a, const auto* b) {
           return a->second.name < b->second.name;
+        });
+
+        // DrawTextEx(font, "°", {column_proc_id + column_offset - 30 ,header_text_height}, 32, 0, WHITE);
+
+        break;
+      }
+
+      case SORT_PID: {
+        std::sort(sorted_procs.begin(), sorted_procs.end(), [](const auto* a, const auto* b) {
+          return a->first < b->first;
         });
         break;
       }
 
-      case 1: {
-        //sort cpu
+      case SORT_PARENT_PID: {
+        std::sort(sorted_procs.begin(), sorted_procs.end(), [](const auto* a, const auto* b) {
+          return a->second.parent_pid < b->first;
+        });
+        break;
+      }
+
+      case SORT_CPU_USAGE: {
         std::sort(sorted_procs.begin(), sorted_procs.end(), [](const auto* a, const auto* b) {
           return a->second.cpu_usage.load() > b->second.cpu_usage.load();
         });
@@ -75,7 +72,7 @@ namespace ui {
       DrawTexture(proc->second.icon, column_ico + column_offset, i + 4, WHITE);
       DrawTextEx(font, proc->second.name.c_str(), {column_name + column_offset, i}, data_text_size, 0, data_text_color);
       DrawTextEx(font, std::to_string(proc->first).c_str(), {column_proc_id + column_offset, i}, data_text_size, 0, data_text_color);
-      DrawTextEx(font, std::to_string(proc->second.parent_id).c_str(), {column_parent_id + column_offset, i}, data_text_size, 0, data_text_color);
+      DrawTextEx(font, std::to_string(proc->second.parent_pid).c_str(), {column_parent_id + column_offset, i}, data_text_size, 0, data_text_color);
       DrawTextEx(font, std::to_string(proc->second.cpu_usage.load()).substr(0, std::to_string(proc->second.cpu_usage.load()).find('.') + 3).c_str(), {column_cpu + column_offset, i}, data_text_size, 0, data_text_color);
 
       float max_width = window_width - 1094.0f;
