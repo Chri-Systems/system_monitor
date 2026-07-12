@@ -4,23 +4,14 @@
 
 
 #include <iostream>
-#include <windows.h>
-#include <tlhelp32.h>
-#include <tchar.h>
 #include <raylib.h>
 #include <thread>
 
-#include "process/process.h"
+#include "processes/processes.h"
+#include "ui/ui.h"
 
 using std::cout;
 using std::endl;
-
-namespace ui {
-  int window_width = 1920;
-  int window_height = 1080;
-  Font font;
-  int scroll;
-}
 
 void update_input();
 
@@ -31,7 +22,7 @@ int main() {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(ui::window_width, ui::window_height, "test");
 
-  ui::font = LoadFont("Archivo-SemiBold.ttf");
+  ui::font = LoadFontEx("Archivo-SemiBold.ttf", 48, nullptr, 250);
 
   process::update_list();
 
@@ -56,36 +47,13 @@ int main() {
 
     update_input();
 
-    ClearBackground({20, 20, 20, 255});
+    ClearBackground({30, 30, 30, 255});
     SetWindowOpacity(1);
     BeginDrawing();
-    DrawFPS(1700, 10);
 
-    float i = 50;
-    float n = 0;
+    ui::render_background();
+    ui::render_processes();
 
-    DrawLine(0, i - 6, ui::window_width, i - 6, GRAY);
-    DrawLine(0, i - 7, ui::window_width, i - 7, GRAY);
-
-    for (const auto& proc: process::processes) {
-      if (n < ui::scroll) {
-        n++;
-        continue;
-      }
-      if (i > 1000) {break;}
-      DrawTextEx(ui::font, proc.second.name.c_str(), {50, i}, 18, 0.5, WHITE);
-      DrawTextEx(ui::font, std::to_string(proc.second.cpu_usage.load()).c_str(), {450, i}, 18, 0.5, WHITE);
-      DrawTextEx(ui::font, std::to_string(proc.first).c_str(), {600, i}, 18, 0.5, WHITE);
-      DrawTextEx(ui::font, std::to_string(proc.second.parent_id).c_str(), {750, i}, 18, 0.5, WHITE);
-      if (proc.second.sub_proc_number != 0) {
-        DrawTextEx(ui::font, std::to_string(proc.second.sub_proc_number).c_str(), {900, i}, 18, 0.5, WHITE);
-      }
-
-      DrawLine(0, i + 22, ui::window_width, i + 22, GRAY);
-      DrawLine(0, i + 21, ui::window_width, i + 21, GRAY);
-      i += 28;
-
-    }
     EndDrawing();
   }
 
@@ -102,5 +70,19 @@ void update_input() {
     ui::window_height = GetScreenHeight();
   }
 
+
+  //pulsanti
+
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_cpu_usage_rect)) {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      ui::processes_sort = 0;
+    }
+  }
+
+  if (CheckCollisionPointRec(GetMousePosition(), ui::header_name_rect)) {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+      ui::processes_sort = 1;
+    }
+  }
 
 }

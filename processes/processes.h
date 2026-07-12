@@ -1,6 +1,21 @@
 #pragma once
+#define WIN32_LEAN_AND_MEAN
+
 #include <atomic>
+#include <raylib.h>
+#include <string>
 #include <unordered_map>
+#include <tchar.h>
+
+#define Rectangle RectangleWindows
+#define CloseWindow CloseWindowWindows
+#define ShowCursor ShowCursorWindows
+#define DrawTextEx DrawTextExWindows
+#include <windows.h>
+#undef Rectangle
+#undef CloseWindow
+#undef ShowCursor
+#undef DrawTextEx
 
 
 namespace process {
@@ -12,14 +27,14 @@ namespace process {
     DWORD parent_id;
     std::string name;
     std::string path;
-
     std::atomic<double> cpu_usage;
 
     HANDLE handle;
-
     int sub_proc_number;
-
     proc_times last_time;
+    Texture icon;
+
+    bool is_system = false;
   };
 
   inline std::unordered_map<DWORD, Process> processes;
@@ -31,4 +46,5 @@ namespace process {
   void update_processes_cpu_usage();
   std::string get_process_path(HANDLE handle);
   // void group_children_processes();
+  Texture2D get_ico_texture(const std::string& path);
 }

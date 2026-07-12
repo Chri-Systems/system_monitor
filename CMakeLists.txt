@@ -3,13 +3,16 @@ project(system_monitor)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(system_monitor main.cpp
+add_executable(system_monitor WIN32
+        main.cpp
         cpu/cpu.cpp
         cpu/cpu.h
         ram/ram.cpp
         ram/ram.h
-        process/process.cpp
-        process/process.h
+        processes/processes.cpp
+        processes/processes.h
+        ui/ui.cpp
+        ui/ui.h
 )
 
 find_package(raylib CONFIG REQUIRED)

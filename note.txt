@@ -8,3 +8,8 @@ pid
 process name
 cpu usage (percentuale con precisione 1 o 2 cifre decimali)
 ram usage (kb, mb o gb in base a quanto sta usando, sempre con precisione decimale di 1 o 2)
+
+
+
+
+fare che quando clicchi su un processo viene selezionato e lasciato in cima indipendentemente dal sorting
