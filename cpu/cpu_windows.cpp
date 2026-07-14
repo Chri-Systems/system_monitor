@@ -6,7 +6,7 @@
 #include <tchar.h>
 #include <stdio.h>
 
-#include "cpu_windows.h"
+#include "cpu.h"
 
 
 namespace cpu {

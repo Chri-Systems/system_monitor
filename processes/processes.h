@@ -27,7 +27,7 @@ namespace processes {
     unsigned long long user;
   };
   struct Process {
-    ulong parent_pid;
+    unsigned long parent_pid;
     std::string name;
     std::string path;
     std::atomic<double> cpu_usage;
@@ -40,7 +40,7 @@ namespace processes {
     bool is_system = false;
   };
 
-  inline std::unordered_map<ulong, Process> processes;
+  inline std::unordered_map<unsigned long, Process> processes;
 
 
 #ifdef _WIN32
