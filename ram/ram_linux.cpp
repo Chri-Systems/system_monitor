@@ -1,5 +1,5 @@
-//
-// Created by chri on 14/07/2026.
-//
+#ifdef __linux__
 
-#include "ram_linux.h"
+#include "ram.h"
+
+#endif

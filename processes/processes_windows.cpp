@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include <raylib.h>
 #include <iostream>
 
@@ -22,7 +24,7 @@
 #include <thread>
 #include <vector>
 
-namespace process {
+namespace processes {
   proc_times get_process_time(HANDLE process) {
     FILETIME c_time, e_time, k_time, u_time;
     if (!GetProcessTimes(process, &c_time, &e_time, &k_time, &u_time)) {
@@ -192,3 +194,4 @@ namespace process {
   }
 
 }
+#endif

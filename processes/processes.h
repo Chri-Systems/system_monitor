@@ -5,6 +5,8 @@
 #include <raylib.h>
 #include <string>
 #include <unordered_map>
+
+#ifdef _WIN32
 #include <tchar.h>
 
 #define Rectangle RectangleWindows
@@ -16,20 +18,21 @@
 #undef CloseWindow
 #undef ShowCursor
 #undef DrawTextEx
+#endif
 
 
-namespace process {
+namespace processes {
   struct proc_times {
     unsigned long long kernel;
     unsigned long long user;
   };
   struct Process {
-    DWORD parent_pid;
+    ulong parent_pid;
     std::string name;
     std::string path;
     std::atomic<double> cpu_usage;
 
-    HANDLE handle;
+    void* handle;
     int sub_proc_number;
     proc_times last_time;
     Texture icon;
@@ -37,14 +40,18 @@ namespace process {
     bool is_system = false;
   };
 
-  inline std::unordered_map<DWORD, Process> processes;
+  inline std::unordered_map<ulong, Process> processes;
 
 
-  proc_times get_process_time(HANDLE process);
-  double get_process_percentage(HANDLE process, int sleep);
+#ifdef _WIN32
+  proc_times get_process_time(void* process);
+#elif __linux__
+  proc_times get_process_time(const std::string& pid);
+#endif
+  double get_process_percentage(void* process, int sleep);
   void update_list();
   void update_processes_cpu_usage();
-  std::string get_process_path(HANDLE handle);
+  std::string get_process_path(void* handle);
   // void group_children_processes();
   Texture2D get_ico_texture(const std::string& path);
 }

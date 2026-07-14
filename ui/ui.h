@@ -9,8 +9,8 @@ enum sort_types {
 };
 
 namespace ui {
-  inline int window_width = 1920;
-  inline int window_height = 1080;
+  inline int window_width = 1280;
+  inline int window_height = 720;
   inline Font font;
   inline int scroll;
   inline int processes_sort = 0;

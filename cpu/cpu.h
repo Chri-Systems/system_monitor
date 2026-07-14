@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace cpu {
   struct cpu_times {
     unsigned long long idle;
@@ -12,3 +11,4 @@ namespace cpu {
   cpu_times get_cpu_time();
   double get_cpu_percentage(int sleep);
 }
+

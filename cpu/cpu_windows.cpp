@@ -1,3 +1,5 @@
+#ifdef _WIN32
+
 #include <iostream>
 #include <windows.h>
 #include <tlhelp32.h>
@@ -41,3 +43,5 @@ namespace cpu {
     return ((static_cast<double>(used) * 100) / static_cast<double>(total));
   }
 }
+
+#endif

@@ -6,7 +6,7 @@
 #include <vector>
 
 
-#include "../processes/processes_windows.h"
+#include "../processes/processes.h"
 
 
 namespace ui {
@@ -22,8 +22,8 @@ namespace ui {
     DrawTextEx(font, "Path", {column_path + column_offset, header_text_height}, header_text_size, 0, header_text_color);
 
     //vettore puntatori map
-    std::vector<const std::pair<const long unsigned int, process::Process>*> sorted_procs;
-    for (const auto& proc : process::processes) {
+    std::vector<const std::pair<const long unsigned int, processes::Process>*> sorted_procs;
+    for (const auto& proc : processes::processes) {
       sorted_procs.push_back(&proc);
     }
 
