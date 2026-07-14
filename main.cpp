@@ -2,13 +2,13 @@
 #define NOUSER
 #define WIN32_LEAN_AND_MEAN
 
-
 #include <iostream>
 #include <raylib.h>
 #include <thread>
 
 #include "processes/processes.h"
 #include "ui/ui.h"
+#include "assets/font.h"
 
 using std::cout;
 using std::endl;
@@ -22,14 +22,15 @@ int main() {
   SetConfigFlags(FLAG_WINDOW_RESIZABLE);
   InitWindow(ui::window_width, ui::window_height, "SystemMonitor");
 
-  ui::font = LoadFontEx("Archivo-SemiBold.ttf", 48, nullptr, 250);
+  ui::font = LoadFontFromMemory(".ttf", assets_font_ttf, assets_font_ttf_len, 48, nullptr, 250);
+
 
   process::update_list();
 
   auto last_clock_processes_cpu = std::chrono::steady_clock::now();
   auto last_clock_processes_update = std::chrono::steady_clock::now();
 
-  SetTargetFPS(60);
+  //SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
     auto now = std::chrono::steady_clock::now();
@@ -54,6 +55,7 @@ int main() {
     ui::render_background();
     ui::render_processes();
 
+    DrawFPS(5, 5);
     EndDrawing();
   }
 
