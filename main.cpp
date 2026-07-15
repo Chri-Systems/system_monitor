@@ -53,6 +53,7 @@ int main() {
 
     ui::render_background();
     ui::render_processes();
+    ui::render_menu();
 
     DrawFPS(5, 5);
     EndDrawing();

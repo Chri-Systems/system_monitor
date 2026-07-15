@@ -1,6 +1,12 @@
 #pragma once
 #include <raylib.h>
 
+enum tab {
+  TAB_USAGE,
+  TAB_PROCESSES,
+  TAB_SETTINGS
+};
+
 enum sort_types {
   SORT_ALPHABETICAL,
   SORT_PID,
@@ -15,6 +21,7 @@ namespace ui {
   inline int scroll;
   inline int processes_sort = 0;
 
+  inline int current_tab = TAB_PROCESSES;
 
   inline float column_ico = 190;
   inline float column_name = 220;
@@ -41,6 +48,7 @@ namespace ui {
   inline Rectangle header_parent_pid_rect(column_parent_id + column_offset, 30, column_cpu - column_parent_id - 20, 60);
   inline Rectangle header_cpu_usage_rect(column_cpu + column_offset, 30, column_path - column_cpu - 20, 60);
 
+  void render_menu();
   void render_processes();
   void render_background();
 }

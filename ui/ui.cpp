@@ -10,6 +10,18 @@
 
 
 namespace ui {
+  void render_menu() {
+    int n = 40;
+    const char* text[3] = {"usage", "processes", "settings"};
+    for (auto & loop_text : text) {
+      Vector2 text_size = MeasureTextEx(font, loop_text, 24, 0);
+      Rectangle rect(40, n, 150, 60);
+      
+      DrawRectangleRounded(rect, 0.4, 2, lines_color_2);
+      DrawTextEx(font, loop_text, {((150 - text_size.x) / 2) + 40, ((60 - text_size.y) / 2) + n}, 24, 0, {GRAY});
+      n += 80;
+    }
+  }
 
   void render_processes() {
     float i = 100;
