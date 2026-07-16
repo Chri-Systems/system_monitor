@@ -87,30 +87,15 @@ namespace ui {
       DrawTextEx(font, std::to_string(proc->second.parent_pid).c_str(), {column_parent_id + column_offset, i}, data_text_size, 0, data_text_color);
       DrawTextEx(font, std::to_string(proc->second.cpu_usage.load()).substr(0, std::to_string(proc->second.cpu_usage.load()).find('.') + 3).c_str(), {column_cpu + column_offset, i}, data_text_size, 0, data_text_color);
 
-      float max_width = window_width - 1094.0f;
-      if (max_width < 50.0f) max_width = 50.0f;
 
-      std::string path = proc->second.path;
-      float x_size = MeasureTextEx(font, path.c_str(), data_text_size, 0).x;
-      if (x_size > max_width) {
-        while (x_size + 14 > max_width) {
-          path.pop_back();
-          x_size = MeasureTextEx(font, path.c_str(), data_text_size, 0).x;
-        }
-        path += "...";
-      }
-      DrawTextEx(font, path.c_str(), {column_path + column_offset, i}, data_text_size, 0, data_text_color);
+      DrawTextEx(font, proc->second.path_to_show.c_str(), {column_path + column_offset, i}, data_text_size, 0, data_text_color);
 
-      /*
-      if (proc.second.sub_proc_number != 0) {
-        DrawTextEx(font, std::to_string(proc.second.sub_proc_number).c_str(), {column_sub_proc_number, i}, 18, 0, WHITE);
-      }
-      */
 
       i += line_height;
       n++;
     }
   }
+
 
 
   void render_background() {
@@ -125,4 +110,22 @@ namespace ui {
     }
 
   }
+
+  void draw_path_string_fix() {
+    float max_width = window_width - 1094.0f;
+    if (max_width < 50.0f) max_width = 50.0f;
+
+    for (auto& proc: processes::processes) {
+      proc.second.path_to_show = proc.second.path;
+      float x_size = MeasureTextEx(font, proc.second.path_to_show.c_str(), data_text_size, 0).x;
+      if (x_size > max_width) {
+        while (x_size + 14 > max_width) {
+          proc.second.path_to_show.pop_back();
+          x_size = MeasureTextEx(font, proc.second.path_to_show.c_str(), data_text_size, 0).x;
+        }
+        proc.second.path_to_show += "...";
+      }
+    }
+  }
+
 }

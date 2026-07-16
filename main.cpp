@@ -34,6 +34,8 @@ int main() {
   while (!WindowShouldClose()) {
     auto now = std::chrono::steady_clock::now();
 
+    update_input();
+
     if (now - last_clock_processes_update >= std::chrono::milliseconds(2000)) {
       processes::update_list();
       // process::group_children_processes();
@@ -45,16 +47,18 @@ int main() {
       last_clock_processes_cpu = now;
     }
 
-    update_input();
-
     ClearBackground({30, 30, 30, 255});
     SetWindowOpacity(1);
     BeginDrawing();
-
+    if (ui::is_window_resized) {
+      ui::draw_path_string_fix();
+    }
     ui::render_background();
     ui::render_processes();
     ui::render_menu();
 
+
+    ui::is_window_resized = false;
     DrawFPS(5, 5);
     EndDrawing();
   }
@@ -70,6 +74,7 @@ void update_input() {
   if (IsWindowResized()) {
     ui::window_width = GetScreenWidth();
     ui::window_height = GetScreenHeight();
+    ui::is_window_resized = true;
   }
 
 

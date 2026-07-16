@@ -17,6 +17,7 @@ enum sort_types {
 namespace ui {
   inline int window_width = 1280;
   inline int window_height = 720;
+  inline bool is_window_resized = true;
   inline Font font;
   inline int scroll;
   inline int processes_sort = 0;
@@ -51,4 +52,5 @@ namespace ui {
   void render_menu();
   void render_processes();
   void render_background();
+  void draw_path_string_fix();
 }

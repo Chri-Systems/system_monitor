@@ -30,9 +30,10 @@ namespace processes {
     unsigned long parent_pid;
     std::string name;
     std::string path;
+    std::string path_to_show;
     std::atomic<double> cpu_usage;
 
-    void* handle;
+    void *handle;
     int sub_proc_number;
     proc_times last_time;
     Texture icon;
@@ -44,14 +45,14 @@ namespace processes {
 
 
 #ifdef _WIN32
-  proc_times get_process_time(void* process);
+  proc_times get_process_time(void *process);
 #elif __linux__
-  proc_times get_process_time(const std::string& pid);
+  proc_times get_process_time(const std::string &pid);
 #endif
-  double get_process_percentage(void* process, int sleep);
+  double get_process_percentage(void *process, int sleep);
   void update_list();
   void update_processes_cpu_usage();
-  std::string get_process_path(void* handle);
+  std::string get_process_path(void *handle);
   // void group_children_processes();
-  Texture2D get_ico_texture(const std::string& path);
-}
+  Texture2D get_ico_texture(const std::string &path);
+} // namespace processes
