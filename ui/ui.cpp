@@ -37,13 +37,22 @@ namespace ui {
     std::vector<const std::pair<const long unsigned int, processes::Process>*> sorted_procs;
     for (const auto& proc : processes::processes) {
       sorted_procs.push_back(&proc);
+
     }
 
     switch (processes_sort) {
 
       case SORT_ALPHABETICAL: {
         std::sort(sorted_procs.begin(), sorted_procs.end(), [](const auto* a, const auto* b) {
-          return a->second.name < b->second.name;
+          std::string name_1 = a->second.name;
+          std::string name_2 = b->second.name;
+          std::transform(name_1.begin(), name_1.end(), name_1.begin(),
+            [](unsigned char c){ return std::tolower(c); });
+
+          std::transform(name_2.begin(), name_2.end(), name_2.begin(),
+            [](unsigned char c){ return std::tolower(c); });
+
+          return name_1 < name_2;
         });
 
         // DrawTextEx(font, "°", {column_proc_id + column_offset - 30 ,header_text_height}, 32, 0, WHITE);
