@@ -2,6 +2,7 @@
 #define NOUSER
 #define WIN32_LEAN_AND_MEAN
 
+#include <algorithm>
 #include <iostream>
 #include <raylib.h>
 #include <thread>
@@ -105,3 +106,4 @@ void update_input() {
   }
 
 }
+

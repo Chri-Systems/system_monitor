@@ -90,14 +90,14 @@ namespace processes {
 
 
 
-    /*
+
     for (const auto& proc: processes) {
       if (proc.second.handle == nullptr) {
         CloseHandle(proc.second.handle);
         processes.erase(proc.first);
       }
     }
-    */
+
 
 
   }
