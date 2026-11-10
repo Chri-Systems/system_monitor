@@ -2,7 +2,6 @@
 #define WIN32_LEAN_AND_MEAN
 
 #include <atomic>
-#include <raylib.h>
 #include <string>
 #include <unordered_map>
 
@@ -36,7 +35,6 @@ namespace processes {
     void *handle;
     int sub_proc_number;
     proc_times last_time;
-    Texture icon;
 
     bool is_system = false;
   };
@@ -54,5 +52,4 @@ namespace processes {
   void update_processes_cpu_usage();
   std::string get_process_path(void *handle);
   // void group_children_processes();
-  Texture2D get_ico_texture(const std::string &path);
 } // namespace processes

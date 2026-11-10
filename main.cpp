@@ -1,109 +1,28 @@
-#define NOGDI
-#define NOUSER
-#define WIN32_LEAN_AND_MEAN
-
 #include <algorithm>
 #include <iostream>
-#include <raylib.h>
 #include <thread>
+#include <qscreen.h>
 
+#include "global.h"
+#include "ui_main_window.h"
+#include "ui_process_list_item.h"
 #include "processes/processes.h"
-#include "ui/ui.h"
-#include "assets/font.h"
 
 using std::cout;
 using std::endl;
 
-void update_input();
-
 //  cout << std::chrono::high_resolution_clock::now().time_since_epoch().count() << endl;
 
-int main() {
-  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-  InitWindow(ui::window_width, ui::window_height, "SystemMonitor");
-
-  ui::font = LoadFontFromMemory(".ttf", assets_font_ttf, assets_font_ttf_len, 48, nullptr, 250);
-
+int main(int argc, char *argv[]) {
+  using global::ui;
+  QApplication app(argc, argv);
+  QMainWindow window;
+  ui.setupUi(&window);
+  window.resize(QGuiApplication::primaryScreen()->availableGeometry().size() * 0.6);
 
   processes::update_list();
 
-  auto last_clock_processes_cpu = std::chrono::steady_clock::now();
-  auto last_clock_processes_update = std::chrono::steady_clock::now();
-
-  //SetTargetFPS(60);
-
-  while (!WindowShouldClose()) {
-    auto now = std::chrono::steady_clock::now();
-
-    update_input();
-
-    if (now - last_clock_processes_update >= std::chrono::milliseconds(2000)) {
-      processes::update_list();
-      // process::group_children_processes();
-      last_clock_processes_update = now;
-    }
-    if (now - last_clock_processes_cpu >= std::chrono::milliseconds(500)) {
-      std::jthread t(processes::update_processes_cpu_usage);
-      t.detach();
-      last_clock_processes_cpu = now;
-    }
-
-    ClearBackground({30, 30, 30, 255});
-    SetWindowOpacity(1);
-    BeginDrawing();
-    if (ui::is_window_resized) {
-      ui::draw_path_string_fix();
-    }
-    ui::render_background();
-    ui::render_processes();
-    ui::render_menu();
-
-
-    ui::is_window_resized = false;
-    DrawFPS(5, 5);
-    EndDrawing();
-  }
-
-}
-
-
-void update_input() {
-
-  ui::scroll -= GetMouseWheelMove();
-  if (ui::scroll < 0) {ui::scroll = 0;}
-
-  if (IsWindowResized()) {
-    ui::window_width = GetScreenWidth();
-    ui::window_height = GetScreenHeight();
-    ui::is_window_resized = true;
-  }
-
-
-  //pulsanti
-
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_name_rect)) {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = SORT_ALPHABETICAL;
-    }
-  }
-
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_pid_rect)) {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = SORT_PID;
-    }
-  }
-
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_parent_pid_rect)) {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = SORT_PARENT_PID;
-    }
-  }
-
-  if (CheckCollisionPointRec(GetMousePosition(), ui::header_cpu_usage_rect)) {
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-      ui::processes_sort = SORT_CPU_USAGE;
-    }
-  }
-
+  window.show();
+  return QApplication::exec();
 }
 
