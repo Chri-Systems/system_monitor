@@ -20,9 +20,9 @@ int main(int argc, char *argv[]) {
   ui.setupUi(&window);
   window.resize(QGuiApplication::primaryScreen()->availableGeometry().size() * 0.6);
 
-  processes::update_list();
+  processes::update_process_list();
+  processes::update_process_ui();
 
   window.show();
   return QApplication::exec();
 }
-

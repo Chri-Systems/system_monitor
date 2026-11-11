@@ -42,13 +42,11 @@ namespace processes {
   inline std::unordered_map<unsigned long, Process> processes;
 
 
-#ifdef _WIN32
-  proc_times get_process_time(void *process);
-#elif __linux__
   proc_times get_process_time(const std::string &pid);
-#endif
+
   double get_process_percentage(void *process, int sleep);
-  void update_list();
+  void update_process_list();
+  void update_process_ui();
   void update_processes_cpu_usage();
   std::string get_process_path(void *handle);
   // void group_children_processes();

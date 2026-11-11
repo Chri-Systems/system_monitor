@@ -9,7 +9,7 @@
 
 namespace processes {
 
-  void update_list() {
+  void update_process_list() {
     using global::ui;
 
     for (const auto& proc_path : std::filesystem::directory_iterator("/proc")) {
@@ -28,19 +28,27 @@ namespace processes {
           std::string name;
           std::getline(name_path, name);
 
-          auto *process_item = new QWidget();
-          Ui::process_list_item process_list_item;
-          process_list_item.setupUi(process_item);
-
-
-          process_list_item.title->setText(name.data());
-
-          auto *item = new QListWidgetItem(ui.process_list);
-          ui.process_list->addItem(item);
-          ui.process_list->setItemWidget(item, process_item);
+          Process& proc = processes[stoi(pid)];
+          proc.name = name;
 
         }
       }
+    }
+  }
+  void update_process_ui() {
+    using global::ui;
+    for (auto &proc: processes) {
+
+      auto *process_item = new QWidget();
+      Ui::process_list_item process_list_item;
+      process_list_item.setupUi(process_item);
+
+      process_list_item.label_name->setText(proc.second.name.data());
+
+      auto *item = new QListWidgetItem(ui.process_list);
+      ui.process_list->addItem(item);
+      ui.process_list->setItemWidget(item, process_item);
+
     }
   }
 }
