@@ -1,6 +1,6 @@
-# SystemMonitor
+# System Monitor
 
-SystemMonitor è un monitor di sistema che permette di visualizzare informazioni dettagliate sull'utilizzo delle risorse del computer su **Windows** e **Linux**
+System Monitor è un monitor di sistema che permette di visualizzare informazioni dettagliate sull'utilizzo delle risorse del computer su **Linux** (in futuro potrebbe venire aggiunto anche il supporto per Windows)
 
 ---
 
